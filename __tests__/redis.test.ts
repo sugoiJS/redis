@@ -12,7 +12,7 @@ class DecoratorVerifier {
     static decoratorTestChannel;
     static decoratorTestPattern;
 
-    @OnRedisMessage('decoratorTest', null, (msg) => {
+    @OnRedisMessage('decoratorTest', (msg) => {
         msg.data+="MW";
     })
     public static listener(data) {
@@ -37,19 +37,19 @@ beforeAll(() => {
     client = connection.getRedisClient();
 });
 afterAll(() => {
-    connection.quit()
+    RedisProvider.QuitAll(true);
 });
 
 describe("Redis basic", () => {
 
     it("check basic connection", () => {
-        expect(RedisProvider.GetHandler().getRedisClient()).toBe(client)
+        expect(RedisProvider.GetConnection().getRedisClient()).toBe(client)
     });
 
     it("check basic set", async () => {
         expect.assertions(1);
-        await RedisProvider.GetHandler().set('test', '1');
-        expect(await RedisProvider.GetHandler().get('test')).toEqual('1');
+        await RedisProvider.GetConnection().set('test', '1');
+        expect(await RedisProvider.GetConnection().get('test')).toEqual('1');
     });
 
 });
@@ -89,20 +89,20 @@ describe("Redis pub/sub decorators", () => {
 
 describe("Redis Scripts", () => {
     it("check redis lua inline script running", async () => {
-        await RedisProvider.GetHandler()
+        await RedisProvider.GetConnection()
             .runScripts(ScriptResource
                 .OfScript('return redis.call("HSET",KEYS[1],ARGV[1],ARGV[2])')
-                .setKeys('scriptTesting')
+                .setKeys('inlineScriptTesting')
                 .setArgs('FIELD','true')
             );
-        expect(await RedisProvider.GetHandler().HGET('scriptTesting','FIELD')).toBe('true');
+        expect(await RedisProvider.GetConnection().HGET('inlineScriptTesting','FIELD')).toBe('true');
     });
 
     it("check redis lua script running", async () => {
-        await RedisProvider.GetHandler().runScripts(
+        await RedisProvider.GetConnection().runScripts(
             ScriptResource.OfFile('__tests__/lua-scripts/dummy.lua')
         );
-        expect(await RedisProvider.GetHandler().get('scriptTesting')).toBe('true');
+        expect(await RedisProvider.GetConnection().get('scriptTesting')).toBe('true');
     });
 });
 
@@ -114,7 +114,7 @@ async function pubSubVerifier(byPattern: boolean, channelName: string) {
     });
 
     return await new Promise(resolve => {
-        const subscriber = RedisProvider.GetHandler()
+        const subscriber = RedisProvider.GetConnection()
             .getSubscriber(byPattern, channelName);
 
         subscriber.pipe(
@@ -128,10 +128,10 @@ async function pubSubVerifier(byPattern: boolean, channelName: string) {
                     const publishChannel = byPattern
                         ? channelName.split('*').join('1')
                         : channelName;
-                    await RedisProvider.GetHandler().publish(publishChannel, "testing_" + counter++);
+                    await RedisProvider.GetConnection().publish(publishChannel, "testing_" + counter++);
                     setTimeout(async () => {
-                        await RedisProvider.GetHandler().publish(publishChannel, "testing_" + counter++);
-                        await RedisProvider.GetHandler().unsubscribe(byPattern, channelName);
+                        await RedisProvider.GetConnection().publish(publishChannel, "testing_" + counter++);
+                        await RedisProvider.GetConnection().unsubscribe(byPattern, channelName);
                     }, 0);
                 },
                 _ => {

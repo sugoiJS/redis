@@ -228,18 +228,10 @@ export class RedisProvider implements IRedisProvider {
     }
 
 
-    static GetHandler();
-    static GetHandler(connectionName: string);
-    static GetHandler(connectionName: string, connectionType: RedisConnectionTypes);
-    static GetHandler(connectionName?: string, connectionType?: RedisConnectionTypes) {
-        return this.GetConnection(connectionName, connectionType);
-    };
-
-
-    protected static GetConnection();
-    protected static GetConnection(connectionName: string);
-    protected static GetConnection(connectionName: string, connectionType: RedisConnectionTypes);
-    protected static GetConnection(connectionName: string = RedisProvider.DEFAULT_CONNECTION_NAME,
+    public static GetConnection();
+    public static GetConnection(connectionName: string);
+    public static GetConnection(connectionName: string, connectionType: RedisConnectionTypes);
+    public static GetConnection(connectionName: string = RedisProvider.DEFAULT_CONNECTION_NAME,
                                    connectionType: RedisConnectionTypes = RedisConnectionTypes.QUERY): TRedisProvider {
         connectionName = RedisProvider.getConnectionName(connectionName, connectionType);
         if (RedisProvider.Connections.has(connectionName)) {
@@ -247,6 +239,10 @@ export class RedisProvider implements IRedisProvider {
         } else {
             throw new RedisError(EXCEPTIONS.CONNECTION_NOT_FOUND.message, EXCEPTIONS.CONNECTION_NOT_FOUND.code, connectionName, false);
         }
+    }
+
+    public static QuitAll(force?: boolean){
+        Array.from(this.Connections.values()).forEach(val=>val.quit(force))
     }
 
     protected static getConnectionName(connectionName: string, connectionType: RedisConnectionTypes) {

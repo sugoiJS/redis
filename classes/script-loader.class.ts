@@ -87,7 +87,7 @@ export class Script {
             : Promise.resolve(name);
         return this.loader = buffer$.then((script) => {
             this.script = script;
-            return (<any>this._redisClient.script('load', script))
+            return new Promise(resolve => this._redisClient.script('load', script,(err,sha)=>resolve(sha)))
         })
             .then((sha) => {
                 this.sha = sha;
