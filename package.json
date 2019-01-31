@@ -1,0 +1,37 @@
+{
+  "name": "@sugoi/redis",
+  "version": "3.0.0",
+  "description": "sugoi framework redis support",
+  "main": "dist/index.js",
+  "types": "dist/index.js",
+  "scripts": {
+    "test": "jest --config=jest.config.js --coverage --detectOpenHandles",
+    "docs": "..\\node_modules\\.bin\\typedoc --out dist\\docs\\redis --json dist\\docs\\main.json --ignoreCompilerErrors --excludeNotExported --excludeProtected --excludePrivate --readme .\\README.md --mode modules --hideGenerator --gitRevision '1.0.0' --externalPattern node_modules/**/* --excludeExternals",
+    "update:patch": "rmdir /S dist && tsc && npm version patch && npm publish && npm run docs",
+    "update:minor": "rmdir /S dist && tsc && npm version minor && npm publish && npm run docs",
+    "update:major": "rmdir /S dist && tsc && npm version major && npm publish && npm run docs"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [
+    "redis",
+    "framework",
+    "orm"
+  ],
+  "author": "Orel Balilti",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/orelba93/sugoi-framework#readme",
+  "dependencies": {
+    "@sugoi/core": "^3.2.1",
+    "redis": "^2.8.0",
+    "rxjs": "^6.3.3"
+  },
+  "devDependencies": {
+    "@types/redis": "^2.8.6",
+    "redis-mock": "^0.43.0",
+    "@types/jest": "^23.3.9",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.1"
+  }
+}
