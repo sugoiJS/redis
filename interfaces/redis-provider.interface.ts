@@ -3,7 +3,7 @@ import {Observable} from "rxjs/index";
 export interface IRedisProvider {
     publish(channel: string, value: string): Promise<number>;
 
-    quit(force?: boolean): void;
+    quit(): Promise<boolean>;
 
     getSubscriber<DataType>(byPattern: false, channel: string): Observable<DataType>
 

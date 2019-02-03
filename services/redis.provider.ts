@@ -1,19 +1,21 @@
 import {IRedisConfig} from "../interfaces/redis-config.interface";
-import {RedisClient, RedisClient as _RedisClient} from "redis";
+import {RedisClient as _RedisClient} from "redis";
 import {RedisError} from "../exceptions/redis.exception";
 import {EXCEPTIONS} from "../constants/exceptions.constant";
-import {Observable} from "rxjs/index";
+import {Observable, Subject} from "rxjs/index";
 import {IRedisProvider} from "../interfaces/redis-provider.interface";
 import {promisify} from "util";
 import {RedisConnectionTypes} from "../constants/redis-connection-types.constants";
 import {MessageType, PubSubMessage} from "../classes/pub-sub-message.class";
-import {filter, share} from "rxjs/internal/operators";
+import {filter, publish, refCount, share} from "rxjs/internal/operators";
 import {RedisInterceptProxy} from "../classes/redis-intercept.proxy";
 import {ScriptLoader} from "../classes/script-loader.class";
 import {ScriptResource} from "../classes/script-resource.class";
 import {CHANNEL_DECORATOR_KEY, PATTERN_DECORATOR_KEY} from "../decorators/on-message.decorator";
+import {IRedisClientPromise} from "../interfaces/redis-client-promise.interface";
 
-export type TRedisProvider = RedisClient & RedisProvider;
+export type TRedisProvider = RedisProvider & _RedisClient & IRedisClientPromise;
+export type TRedisClient = _RedisClient;
 
 export class RedisProvider implements IRedisProvider {
     private static _RedisClient = _RedisClient;
@@ -35,14 +37,14 @@ export class RedisProvider implements IRedisProvider {
     private _config: IRedisConfig;
     private _connectionName: string;
     private _id: string;
-    private _client: _RedisClient;
+    private _client: TRedisClient;
     private _scriptLoader: ScriptLoader;
 
     public get connectionName(): string {
         return this._connectionName;
     };
 
-    get client(): _RedisClient {
+    get client(): TRedisClient {
         return this._client;
     };
 
@@ -62,21 +64,30 @@ export class RedisProvider implements IRedisProvider {
         return this._client;
     }
 
-    public quit(force: boolean = false): void {
+    public quit(): Promise<boolean> {
         const types = [RedisConnectionTypes.PUB, RedisConnectionTypes.QUERY, RedisConnectionTypes.SUB];
+        const quitPromises = [];
         for (const type of types) {
-            let client;
+            let client,connection;
             try {
-                client = RedisProvider.GetConnection(this._connectionName, type);
-                client.end(force);
+                connection = RedisProvider.GetConnection(this._connectionName, type);
+                client = connection.getRedisClient();
+                const p = new Promise(resolve => {
+                    connection.quit((res) => {
+                        resolve(res);
+                    });
+                });
+                quitPromises.push(p);
             } catch (e) {
             }
         }
+        return Promise.all(quitPromises).then(res => res.every(status => status === "OK"));
     }
 
     public runAsyncMethod<Response = any>(method: (...args) => any, ...args): Promise<Response> {
         return promisify(method).apply(this._client, args);
     }
+
 
     public publish(channel: string, value: string): Promise<number> {
         const client = this.getPublishClient().getRedisClient();
@@ -87,8 +98,8 @@ export class RedisProvider implements IRedisProvider {
     public getSubscriber<DataType>(byPattern: true, pattern: string): Observable<PubSubMessage<DataType>>
     public getSubscriber<DataType>(byPattern: boolean, channelOrPattern: string): Observable<PubSubMessage<DataType>> {
 
+        const client = this.getSubscriberClient();
         return Observable.create(obs => {
-            const client = this.getSubscriberClient().getRedisClient();
             if (byPattern) {
                 client.psubscribe(channelOrPattern);
                 client.on("pmessage", (pattern, channel, data) => {
@@ -113,7 +124,11 @@ export class RedisProvider implements IRedisProvider {
             client.on("unsubscribe", (channel, data) => this.onChannelClose(obs, channel, data));
             client.on("punsubscribe", (channel, data) => this.onChannelClose(obs, channel, data));
         })
-            .pipe(share());
+            .pipe(
+                share(),
+                publish(),
+                refCount()
+            );
     }
 
     public unsubscribe(byPattern: false, ...channels: string[]): Promise<string>;
@@ -183,11 +198,11 @@ export class RedisProvider implements IRedisProvider {
         keyName += channel;
         const keyNameSymbol = Symbol.for(keyName);
         const listeners = Reflect.getMetadata(keyNameSymbol, RedisProvider.prototype);
-        Reflect.deleteMetadata(keyNameSymbol,RedisProvider.prototype);
-        if(!listeners) return;
-        Array.from(listeners).forEach((listener: any )=> {
+        Reflect.deleteMetadata(keyNameSymbol, RedisProvider.prototype);
+        if (!listeners) return;
+        Array.from(listeners).forEach((listener: any) => {
             this.getSubscriber(byPattern, listener.channelOrPattern)
-                .pipe(filter((msg:PubSubMessage) => msg.type === MessageType.data))
+                .pipe(filter((msg: PubSubMessage) => msg.type === MessageType.data))
                 .subscribe((msg) => listener.callback(msg));
         })
     }
@@ -232,7 +247,7 @@ export class RedisProvider implements IRedisProvider {
     public static GetConnection(connectionName: string);
     public static GetConnection(connectionName: string, connectionType: RedisConnectionTypes);
     public static GetConnection(connectionName: string = RedisProvider.DEFAULT_CONNECTION_NAME,
-                                   connectionType: RedisConnectionTypes = RedisConnectionTypes.QUERY): TRedisProvider {
+                                connectionType: RedisConnectionTypes = RedisConnectionTypes.QUERY): TRedisProvider {
         connectionName = RedisProvider.getConnectionName(connectionName, connectionType);
         if (RedisProvider.Connections.has(connectionName)) {
             return RedisProvider.Connections.get(connectionName);
@@ -241,8 +256,8 @@ export class RedisProvider implements IRedisProvider {
         }
     }
 
-    public static QuitAll(force?: boolean){
-        Array.from(this.Connections.values()).forEach(val=>val.quit(force))
+    public static QuitAll() {
+        return Array.from(this.Connections.values()).map(val => val.quit())
     }
 
     protected static getConnectionName(connectionName: string, connectionType: RedisConnectionTypes) {

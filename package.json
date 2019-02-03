@@ -6,10 +6,13 @@
   "types": "dist/index.js",
   "scripts": {
     "test": "jest --config=jest.config.js --coverage --detectOpenHandles",
-    "docs": "..\\node_modules\\.bin\\typedoc --out dist\\docs\\redis --json dist\\docs\\main.json --ignoreCompilerErrors --excludeNotExported --excludeProtected --excludePrivate --readme .\\README.md --mode modules --hideGenerator --gitRevision '1.0.0' --externalPattern node_modules/**/* --excludeExternals",
-    "update:patch": "rmdir /S dist && tsc && npm version patch && npm publish && npm run docs",
-    "update:minor": "rmdir /S dist && tsc && npm version minor && npm publish && npm run docs",
-    "update:major": "rmdir /S dist && tsc && npm version major && npm publish && npm run docs"
+    "coverage": "jest --coverage --coverageReporters=text-lcov  --detectOpenHandles | curl -s https://codecov.io/bash | bash",
+    "docs": "..\\node_modules\\.bin\\typedoc --out ..\\dist\\docs\\core --json dist\\docs\\main.json --ignoreCompilerErrors --excludeNotExported --excludeProtected --excludePrivate --readme .\\README.md --mode file --hideGenerator --gitRevision '1.0.0' --externalPattern node_modules/* --excludeExternals ",
+    "build:publish": "npm run build && npm test",
+    "update:patch": "npm version patch && npm publish && npm run docs",
+    "update:minor": "npm version minor && npm publish && npm run docs",
+    "update:major": "npm version major && npm publish && npm run docs",
+    "build": "rmdir /S dist && tsc && cp -r __tests__/lua-scripts dist/__tests__/lua-scripts"
   },
   "files": [
     "dist/**/*"
@@ -23,15 +26,15 @@
   "license": "MIT",
   "homepage": "https://bitbucket.org/orelba93/sugoi-framework#readme",
   "dependencies": {
-    "@sugoi/core": "^3.2.1",
+    "@sugoi/core": "^3.2.2",
     "redis": "^2.8.0",
-    "rxjs": "^6.3.3"
+    "rxjs": "^6.4.0"
   },
   "devDependencies": {
-    "@types/redis": "^2.8.6",
-    "redis-mock": "^0.43.0",
     "@types/jest": "^23.3.9",
+    "@types/redis": "^2.8.10",
     "jest": "^23.6.0",
+    "redis-mock": "^0.43.0",
     "ts-jest": "^23.10.1"
   }
 }

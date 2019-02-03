@@ -1,9 +1,14 @@
-import {RedisProvider} from "../services/redis.provider";
 import {RedisClient} from "redis";
+import {RedisMock} from  "redis-mock";
 import {filter} from "rxjs/internal/operators";
-import {MessageType, PubSubMessage} from "../classes/pub-sub-message.class";
-import {OnRedisMessage, OnRedisPMessage} from "../decorators/on-message.decorator";
-import {ScriptResource} from "../classes/script-resource.class";
+import {
+    OnRedisMessage,
+    OnRedisPMessage,
+    RedisProvider,
+    MessageType,
+    PubSubMessage,
+    ScriptResource
+} from "../index";
 
 let client: RedisClient;
 let connection: RedisProvider;
@@ -13,31 +18,38 @@ class DecoratorVerifier {
     static decoratorTestPattern;
 
     @OnRedisMessage('decoratorTest', (msg) => {
-        msg.data+="MW";
+        msg.data += "MW";
     })
     public static listener(data) {
         this.decoratorTestChannel = data
     }
 
     @OnRedisPMessage('decoratorTestPattern-*', null, (msg) => {
-        msg.data+="MW";
+        msg.data += "MW";
     })
     public static patternListener(msg) {
         this.decoratorTestPattern = msg;
     }
 };
 
-beforeAll(() => {
-    // RedisProvider.RedisClient = RedisMock;
+class Mock{
+    constructor(...args){
+        return RedisMock.createClient(...args);
+    }
+}
+
+beforeAll(async () => {
+    // RedisProvider.RedisClient = Mock;
     connection = RedisProvider.CreateConnection({
         host: "127.0.0.1",
         port: 6379,
         isDefault: true
     });
     client = connection.getRedisClient();
+    return await  new Promise(resolve => client.flushall(() => resolve()))
 });
 afterAll(() => {
-    RedisProvider.QuitAll(true);
+    client.flushall(() => RedisProvider.QuitAll());
 });
 
 describe("Redis basic", () => {
@@ -65,11 +77,11 @@ describe("Redis pub/sub decorators", () => {
         return await new Promise(async resolve => {
             await pubSubVerifier(false, 'decoratorTest');
             expect.assertions(5);
-            setTimeout(()=>{
+            setTimeout(() => {
                 expect(DecoratorVerifier.decoratorTestChannel).toBeDefined();
                 expect(DecoratorVerifier.decoratorTestChannel.data.indexOf("MW")).toBeGreaterThanOrEqual(0);
                 resolve();
-            },0)
+            }, 0)
 
         })
     });
@@ -78,29 +90,31 @@ describe("Redis pub/sub decorators", () => {
         return await new Promise(async resolve => {
             await pubSubVerifier(true, 'decoratorTestPattern-*');
             expect.assertions(5);
-            setTimeout(()=>{
+            setTimeout(() => {
                 expect(DecoratorVerifier.decoratorTestPattern).toBeDefined();
                 expect(DecoratorVerifier.decoratorTestChannel.data.indexOf("MW")).toBeGreaterThanOrEqual(0);
                 resolve();
-            },0)
+            }, 0)
         })
     });
 });
 
 describe("Redis Scripts", () => {
     it("check redis lua inline script running", async () => {
+        expect.assertions(1);
         await RedisProvider.GetConnection()
             .runScripts(ScriptResource
                 .OfScript('return redis.call("HSET",KEYS[1],ARGV[1],ARGV[2])')
                 .setKeys('inlineScriptTesting')
-                .setArgs('FIELD','true')
+                .setArgs('FIELD', 'true')
             );
-        expect(await RedisProvider.GetConnection().HGET('inlineScriptTesting','FIELD')).toBe('true');
+        expect(await RedisProvider.GetConnection().HGET('inlineScriptTesting', 'FIELD')).toBe('true');
     });
 
     it("check redis lua script running", async () => {
+        expect.assertions(1);
         await RedisProvider.GetConnection().runScripts(
-            ScriptResource.OfFile('__tests__/lua-scripts/dummy.lua')
+            ScriptResource.OfFile(__dirname + '/lua-scripts/dummy.lua')
         );
         expect(await RedisProvider.GetConnection().get('scriptTesting')).toBe('true');
     });

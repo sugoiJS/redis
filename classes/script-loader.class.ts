@@ -43,9 +43,10 @@ export class ScriptLoader {
         return Promise.all(this.scripts.map(script => script.loader))
             .then((resolvedScripts: Script[]) => {
                 return Promise.all(resolvedScripts.map(async resolvedScript =>{
-                    try {
+                    if(resolvedScript.sha){
                         return await this._redisClient.evalsha(resolvedScript.sha, resolvedScript.keys.length, ...resolvedScript.keys, ...resolvedScript.args) as any
-                    }catch (err){
+                    }
+                    else {
                         return await this._redisClient.eval(resolvedScript.script, resolvedScript.keys.length, ...resolvedScript.keys, ...resolvedScript.args) as any
                     }
                 }));
@@ -83,7 +84,7 @@ export class Script {
 
     private loadBuffer(name) {
         const buffer$ = name.toLowerCase().split('.lua').length > 1
-            ? promisify(fs.readFile).apply(fs, [name])
+            ? promisify(fs.readFile).apply(fs, [name]).then(buffer=>buffer.toString())
             : Promise.resolve(name);
         return this.loader = buffer$.then((script) => {
             this.script = script;
