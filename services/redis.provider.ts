@@ -73,7 +73,7 @@ export class RedisProvider implements IRedisProvider {
                 connection = RedisProvider.GetConnection(this._connectionName, type);
                 client = connection.getRedisClient();
                 const p = new Promise(resolve => {
-                    connection.quit((res) => {
+                    client.quit((res) => {
                         resolve(res);
                     });
                 });
