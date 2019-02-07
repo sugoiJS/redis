@@ -46,10 +46,11 @@ beforeAll(async () => {
         isDefault: true
     });
     client = connection.getRedisClient();
-    return await  new Promise(resolve => client.flushall(() => resolve()))
+    return await client;
 });
 afterAll(() => {
-    client.flushall(() => RedisProvider.QuitAll());
+    // client.flushall();
+    RedisProvider.QuitAll();
 });
 
 describe("Redis basic", () => {
@@ -67,16 +68,22 @@ describe("Redis basic", () => {
 });
 
 describe("Redis pub/sub", () => {
-    it("pub/sub by channel", async () => await pubSubVerifier(false, 'testChannel'));
+    it("pub/sub by channel", async () => {
+        expect.assertions(3);
+        return await pubSubVerifier(false, 'testChannel')
+    });
 
-    it("pub/sub by pattern", async () => await pubSubVerifier(true, 'room-*'));
+    it("pub/sub by pattern", async () => {
+        expect.assertions(3);
+        return await pubSubVerifier(true, 'room-*')
+    });
 });
 
 describe("Redis pub/sub decorators", () => {
     it("pub/sub by channel", async () => {
+        expect.assertions(5);
         return await new Promise(async resolve => {
             await pubSubVerifier(false, 'decoratorTest');
-            expect.assertions(5);
             setTimeout(() => {
                 expect(DecoratorVerifier.decoratorTestChannel).toBeDefined();
                 expect(DecoratorVerifier.decoratorTestChannel.data.indexOf("MW")).toBeGreaterThanOrEqual(0);
@@ -88,8 +95,8 @@ describe("Redis pub/sub decorators", () => {
 
     it("pub/sub by pattern", async () => {
         return await new Promise(async resolve => {
-            await pubSubVerifier(true, 'decoratorTestPattern-*');
             expect.assertions(5);
+            await pubSubVerifier(true, 'decoratorTestPattern-*');
             setTimeout(() => {
                 expect(DecoratorVerifier.decoratorTestPattern).toBeDefined();
                 expect(DecoratorVerifier.decoratorTestChannel.data.indexOf("MW")).toBeGreaterThanOrEqual(0);
@@ -121,7 +128,6 @@ describe("Redis Scripts", () => {
 });
 
 async function pubSubVerifier(byPattern: boolean, channelName: string) {
-    expect.assertions(3);
     let counter = 1;
     const mockVerifier = jest.fn((_data: PubSubMessage) => {
         expect(_data.data).toEqual("testing_" + (counter - 1));

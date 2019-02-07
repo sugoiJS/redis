@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.js",
   "scripts": {
-    "test": "jest --config=jest.config.js --coverage --detectOpenHandles",
+    "test": "jest --config=jest.config.js --coverage --detectOpenHandles --forceExit",
     "coverage": "jest --coverage --coverageReporters=text-lcov  --detectOpenHandles | curl -s https://codecov.io/bash | bash",
     "docs": "..\\node_modules\\.bin\\typedoc --out ..\\dist\\docs\\core --json dist\\docs\\main.json --ignoreCompilerErrors --excludeNotExported --excludeProtected --excludePrivate --readme .\\README.md --mode file --hideGenerator --gitRevision '1.0.0' --externalPattern node_modules/* --excludeExternals ",
     "build:publish": "npm run build && npm test",
@@ -20,7 +20,12 @@
   "keywords": [
     "redis",
     "framework",
-    "orm"
+    "promise",
+    "decorator",
+    "@sugoi",
+    "sugoi",
+    "sugoijs",
+    "@sugoijs"
   ],
   "author": "Orel Balilti",
   "license": "MIT",
