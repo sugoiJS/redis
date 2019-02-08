@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for dist/services/redis.provider.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">dist/services</a> redis.provider.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">88.98% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>105/118</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80.77% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>21/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">79.55% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>35/44</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">91.15% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>103/113</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">52x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-yes">49x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">61x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const redis_1 = require("redis");
+const redis_exception_1 = require("../exceptions/redis.exception");
+const exceptions_constant_1 = require("../constants/exceptions.constant");
+const index_1 = require("rxjs/index");
+const util_1 = require("util");
+const redis_connection_types_constants_1 = require("../constants/redis-connection-types.constants");
+const pub_sub_message_class_1 = require("../classes/pub-sub-message.class");
+const operators_1 = require("rxjs/internal/operators");
+const redis_intercept_proxy_1 = require("../classes/redis-intercept.proxy");
+const script_loader_class_1 = require("../classes/script-loader.class");
+const on_message_decorator_1 = require("../decorators/on-message.decorator");
+class RedisProvider {
+    constructor(config, connectionName, connectionType) {
+        this._connectionName = connectionName;
+        connectionName = RedisProvider.getConnectionName(connectionName, connectionType);
+        this._config = config;
+        if (connectionType === redis_connection_types_constants_1.RedisConnectionTypes.QUERY &amp;&amp; this._config.isDefault) {
+            RedisProvider.DEFAULT_CONNECTION = connectionName;
+        }
+        this._id = (++RedisProvider.ConnectionsCounter).toString();
+        this.initClient();
+        this.setDecoratorListeners();
+    }
+<span class="fstat-no" title="function not covered" >    st</span>atic set RedisClient(value) {
+<span class="cstat-no" title="statement not covered" >        this._RedisClient = value;</span>
+    }
+    static get RedisClient() {
+        return this._RedisClient;
+    }
+    get connectionName() {
+        return this._connectionName;
+    }
+    ;
+<span class="fstat-no" title="function not covered" >    ge</span>t client() {
+<span class="cstat-no" title="statement not covered" >        return this._client;</span>
+    }
+    ;
+    getRedisClient() {
+        return this._client;
+    }
+    quit() {
+        const types = [redis_connection_types_constants_1.RedisConnectionTypes.PUB, redis_connection_types_constants_1.RedisConnectionTypes.QUERY, redis_connection_types_constants_1.RedisConnectionTypes.SUB];
+        const quitPromises = [];
+        for (const type of types) {
+            let client, connection;
+            try {
+                connection = RedisProvider.GetConnection(this._connectionName, type);
+                client = connection.getRedisClient();
+                const p = new Promise(resolve =&gt; {
+                    client.quit(<span class="fstat-no" title="function not covered" >(e</span>rr, res) =&gt; {
+<span class="cstat-no" title="statement not covered" >                        resolve(res);</span>
+                    });
+                });
+                quitPromises.push(p);
+            }
+            catch (e) {
+            }
+        }
+        return Promise.all(quitPromises).then(<span class="fstat-no" title="function not covered" >re</span>s =&gt; <span class="cstat-no" title="statement not covered" >res.every(<span class="fstat-no" title="function not covered" >st</span>atus =&gt; <span class="cstat-no" title="statement not covered" >status === "OK")</span>)</span>;
+    }
+    runAsyncMethod(method, ...args) {
+        return util_1.promisify(method).apply(this._client, args);
+    }
+    publish(channel, value) {
+        const client = this.getPublishClient().getRedisClient();
+        return this.runAsyncMethod(client.publish, channel, value);
+    }
+    getSubscriber(byPattern, channelOrPattern) {
+        const client = this.getSubscriberClient();
+        return index_1.Observable.create(obs =&gt; {
+            if (byPattern) {
+                client.psubscribe(channelOrPattern);
+                client.on("pmessage", (pattern, channel, data) =&gt; {
+                    obs.next(new pub_sub_message_class_1.PubSubMessage(data, pub_sub_message_class_1.MessageType.data, channel).setPattern(pattern));
+                });
+                client.on("psubscribe", (channel, data) =&gt; {
+                    obs.next(new pub_sub_message_class_1.PubSubMessage(data, pub_sub_message_class_1.MessageType.init, channel));
+                });
+            }
+            else {
+                client.subscribe(channelOrPattern);
+                client.on("message", (channel, data) =&gt; {
+                    obs.next(new pub_sub_message_class_1.PubSubMessage(data, pub_sub_message_class_1.MessageType.data, channel));
+                });
+                client.on("subscribe", (channel, data) =&gt; {
+                    obs.next(new pub_sub_message_class_1.PubSubMessage(data, pub_sub_message_class_1.MessageType.init, channel));
+                });
+            }
+            client.on("error", <span class="fstat-no" title="function not covered" >(c</span>hannel, data) =&gt; {
+<span class="cstat-no" title="statement not covered" >                obs.err(new pub_sub_message_class_1.PubSubMessage(data, pub_sub_message_class_1.MessageType.error, channel));</span>
+            });
+            client.on("unsubscribe", <span class="fstat-no" title="function not covered" >(c</span>hannel, data) =&gt; <span class="cstat-no" title="statement not covered" >this.onChannelClose(obs, channel, data))</span>;
+            client.on("punsubscribe", (channel, data) =&gt; this.onChannelClose(obs, channel, data));
+        })
+            .pipe(operators_1.share(), operators_1.publish(), operators_1.refCount());
+    }
+    unsubscribe(byPattern, ...channelsOrPatterns) {
+        const client = this.getSubscriberClient();
+        return new Promise((resolve, reject) =&gt; {
+            if (byPattern) {
+                client.punsubscribe(...channelsOrPatterns, <span class="fstat-no" title="function not covered" >(e</span>rr, name) =&gt; {
+<span class="cstat-no" title="statement not covered" >                    if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                        return reject(err);</span>
+                    }
+<span class="cstat-no" title="statement not covered" >                    resolve(name);</span>
+                });
+            }
+            else {
+                client.unsubscribe(...channelsOrPatterns, <span class="fstat-no" title="function not covered" >(e</span>rr, name) =&gt; {
+<span class="cstat-no" title="statement not covered" >                    if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                        return reject(err);</span>
+                    }
+<span class="cstat-no" title="statement not covered" >                    resolve(name);</span>
+                });
+            }
+        });
+    }
+    runScripts(...scripts) {
+        this.loadScripts(...scripts);
+        return this.execScripts();
+    }
+    loadScripts(...scripts) {
+        if (!this._scriptLoader) {
+            this._scriptLoader = new script_loader_class_1.ScriptLoader(this._client);
+        }
+        this._scriptLoader.loadScripts(...scripts);
+    }
+    execScripts() {
+        return this._scriptLoader.execScripts().then((res) =&gt; {
+            this._scriptLoader.reset();
+            return res;
+        });
+    }
+    //-------------- private methods ------------/
+    initClient() {
+        this._client = new RedisProvider.RedisClient(this._config);
+    }
+    setDecoratorListeners() {
+        this.setDecoratorListener(this.connectionName, false);
+        this.setDecoratorListener(this.connectionName, true);
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (this.connectionName === RedisProvider.DEFAULT_CONNECTION_NAME) {
+            this.setDecoratorListener("__SUG__DEFAULT", false);
+            this.setDecoratorListener("__SUG__DEFAULT", true);
+        }
+    }
+    setDecoratorListener(channel, byPattern) {
+        let keyName = byPattern ? on_message_decorator_1.PATTERN_DECORATOR_KEY : on_message_decorator_1.CHANNEL_DECORATOR_KEY;
+        keyName += channel;
+        const keyNameSymbol = Symbol.for(keyName);
+        const listeners = Reflect.getMetadata(keyNameSymbol, RedisProvider.prototype);
+        Reflect.deleteMetadata(keyNameSymbol, RedisProvider.prototype);
+        if (!listeners)
+            return;
+        Array.from(listeners).forEach((listener) =&gt; {
+            this.getSubscriber(byPattern, listener.channelOrPattern)
+                .pipe(operators_1.filter((msg) =&gt; msg.type === pub_sub_message_class_1.MessageType.data))
+                .subscribe((msg) =&gt; listener.callback(msg));
+        });
+    }
+    onChannelClose(obs, channel, data) {
+        obs.next(new pub_sub_message_class_1.PubSubMessage(data, pub_sub_message_class_1.MessageType.close, channel));
+        obs.complete();
+    }
+    getSubscriberClient() {
+        return RedisProvider.CreateConnection(this._config, this._connectionName, redis_connection_types_constants_1.RedisConnectionTypes.SUB);
+    }
+    getPublishClient() {
+        return RedisProvider.CreateConnection(this._config, this._connectionName, redis_connection_types_constants_1.RedisConnectionTypes.PUB);
+    }
+    static CreateConnection(connectionConfig, connectionName = RedisProvider.DEFAULT_CONNECTION_NAME, connectionType = redis_connection_types_constants_1.RedisConnectionTypes.QUERY) {
+        try {
+            return RedisProvider.GetConnection(connectionName, connectionType);
+        }
+        catch (err) {
+        }
+        const provider = new Proxy(new RedisProvider(connectionConfig, connectionName, connectionType), redis_intercept_proxy_1.RedisInterceptProxy.Factory());
+        RedisProvider.Connections.set(RedisProvider.getConnectionName(connectionName, connectionType), provider);
+        return provider;
+    }
+    static GetConnection(connectionName = RedisProvider.DEFAULT_CONNECTION_NAME, connectionType = redis_connection_types_constants_1.RedisConnectionTypes.QUERY) {
+        connectionName = RedisProvider.getConnectionName(connectionName, connectionType);
+        if (RedisProvider.Connections.has(connectionName)) {
+            return RedisProvider.Connections.get(connectionName);
+        }
+        else {
+            throw new redis_exception_1.RedisError(exceptions_constant_1.EXCEPTIONS.CONNECTION_NOT_FOUND.message, exceptions_constant_1.EXCEPTIONS.CONNECTION_NOT_FOUND.code, connectionName, false);
+        }
+    }
+    static QuitAll() {
+        return Array.from(this.Connections.values()).map(val =&gt; val.quit());
+    }
+    static getConnectionName(connectionName, connectionType) {
+        return `${connectionName}_${connectionType}`;
+    }
+}
+RedisProvider._RedisClient = redis_1.RedisClient;
+RedisProvider.DEFAULT_CONNECTION_NAME = 'DEFAULT_CONNECTION';
+RedisProvider.DEFAULT_CONNECTION = RedisProvider.DEFAULT_CONNECTION_NAME;
+RedisProvider.ConnectionsCounter = 0;
+RedisProvider.Connections = new Map();
+exports.RedisProvider = RedisProvider;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Feb 08 2019 09:56:57 GMT+0200 (Jerusalem Standard Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>

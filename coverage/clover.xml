@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1549612617350" clover="3.2.0">
+  <project timestamp="1549612617350" name="All files">
+    <metrics statements="262" coveredstatements="241" conditionals="86" coveredconditionals="68" methods="95" coveredmethods="84" elements="443" coveredelements="393" complexity="0" loc="262" ncloc="262" packages="6" files="10" classes="10">
+      <package name="dist">
+        <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <file name="index.js" path="C:\Users\Orel Balilti\Documents\Projects\Sugoi\redis\dist\index.js">
+          <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="8" count="1" type="stmt"/>
+          <line num="9" count="1" type="stmt"/>
+          <line num="10" count="1" type="stmt"/>
+          <line num="11" count="1" type="stmt"/>
+          <line num="12" count="1" type="stmt"/>
+          <line num="13" count="1" type="stmt"/>
+          <line num="14" count="1" type="stmt"/>
+          <line num="15" count="1" type="stmt"/>
+          <line num="16" count="1" type="stmt"/>
+          <line num="17" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="dist.classes">
+        <metrics statements="83" coveredstatements="77" conditionals="31" coveredconditionals="27" methods="37" coveredmethods="36"/>
+        <file name="pub-sub-message.class.js" path="C:\Users\Orel Balilti\Documents\Projects\Sugoi\redis\dist\classes\pub-sub-message.class.js">
+          <metrics statements="16" coveredstatements="14" conditionals="4" coveredconditionals="3" methods="3" coveredmethods="3"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="5" count="56" type="stmt"/>
+          <line num="6" count="56" type="stmt"/>
+          <line num="7" count="56" type="stmt"/>
+          <line num="8" count="56" type="stmt"/>
+          <line num="9" count="56" type="cond" truecount="1" falsecount="1"/>
+          <line num="10" count="0" type="stmt"/>
+          <line num="11" count="0" type="stmt"/>
+          <line num="15" count="8" type="stmt"/>
+          <line num="16" count="8" type="stmt"/>
+          <line num="19" count="1" type="stmt"/>
+          <line num="21" count="1" type="stmt"/>
+          <line num="22" count="1" type="stmt"/>
+          <line num="23" count="1" type="stmt"/>
+          <line num="24" count="1" type="stmt"/>
+          <line num="25" count="1" type="stmt"/>
+        </file>
+        <file name="redis-intercept.proxy.js" path="C:\Users\Orel Balilti\Documents\Projects\Sugoi\redis\dist\classes\redis-intercept.proxy.js">
+          <metrics statements="9" coveredstatements="8" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="2"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="5" count="4" type="stmt"/>
+          <line num="8" count="217" type="cond" truecount="4" falsecount="0"/>
+          <line num="10" count="44" type="cond" truecount="1" falsecount="1"/>
+          <line num="11" count="44" type="stmt"/>
+          <line num="13" count="44" type="stmt"/>
+          <line num="18" count="0" type="stmt"/>
+          <line num="21" count="173" type="stmt"/>
+          <line num="24" count="1" type="stmt"/>
+        </file>
+        <file name="script-loader.class.js" path="C:\Users\Orel Balilti\Documents\Projects\Sugoi\redis\dist\classes\script-loader.class.js">
+          <metrics statements="46" coveredstatements="43" conditionals="21" coveredconditionals="19" methods="27" coveredmethods="26"/>
+          <line num="2" count="1" type="cond" truecount="3" falsecount="0"/>
+          <line num="3" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="5" count="0" type="stmt"/>
+          <line num="6" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="7" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="10" count="1" type="stmt"/>
+          <line num="11" count="1" type="stmt"/>
+          <line num="12" count="1" type="stmt"/>
+          <line num="15" count="1" type="stmt"/>
+          <line num="16" count="1" type="stmt"/>
+          <line num="19" count="2" type="stmt"/>
+          <line num="22" count="2" type="stmt"/>
+          <line num="26" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="27" count="1" type="stmt"/>
+          <line num="29" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="30" count="1" type="stmt"/>
+          <line num="33" count="0" type="stmt"/>
+          <line num="35" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="36" count="1" type="stmt"/>
+          <line num="38" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="39" count="1" type="stmt"/>
+          <line num="41" count="2" type="stmt"/>
+          <line num="44" count="2" type="stmt"/>
+          <line num="46" count="2" type="stmt"/>
+          <line num="47" count="2" type="cond" truecount="1" falsecount="1"/>
+          <line num="48" count="2" type="stmt"/>
+          <line num="51" count="0" type="stmt"/>
+          <line num="57" count="1" type="stmt"/>
+          <line num="60" count="2" type="stmt"/>
+          <line num="61" count="2" type="stmt"/>
+          <line num="62" count="2" type="stmt"/>
+          <line num="65" count="1" type="stmt"/>
+          <line num="68" count="1" type="stmt"/>
+          <line num="71" count="1" type="stmt"/>
+          <line num="72" count="1" type="stmt"/>
+          <line num="75" count="1" type="stmt"/>
+          <line num="76" count="1" type="stmt"/>
+          <line num="79" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="80" count="1" type="stmt"/>
+          <line num="82" count="2" type="stmt"/>
+          <line num="83" count="2" type="stmt"/>
+          <line num="84" count="2" type="stmt"/>
+          <line num="87" count="2" type="stmt"/>
+          <line num="88" count="2" type="stmt"/>
+          <line num="92" count="1" type="stmt"/>
+        </file>
+        <file name="script-resource.class.js" path="C:\Users\Orel Balilti\Documents\Projects\Sugoi\redis\dist\classes\script-resource.class.js">
+          <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="8" count="2" type="stmt"/>
+          <line num="11" count="1" type="stmt"/>
+          <line num="14" count="1" type="stmt"/>
+          <line num="17" count="1" type="stmt"/>
+          <line num="18" count="1" type="stmt"/>
+          <line num="21" count="1" type="stmt"/>
+          <line num="22" count="1" type="stmt"/>
+          <line num="25" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="dist.constants">
+        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <file name="exceptions.constant.js" path="C:\Users\Orel Balilti\Documents\Projects\Sugoi\redis\dist\constants\exceptions.constant.js">
+          <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+        </file>
+        <file name="redis-connection-types.constants.js" path="C:\Users\Orel Balilti\Documents\Projects\Sugoi\redis\dist\constants\redis-connection-types.constants.js">
+          <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="dist.decorators">
+        <metrics statements="40" coveredstatements="35" conditionals="27" coveredconditionals="18" methods="13" coveredmethods="12"/>
+        <file name="on-message.decorator.js" path="C:\Users\Orel Balilti\Documents\Projects\Sugoi\redis\dist\decorators\on-message.decorator.js">
+          <metrics statements="40" coveredstatements="35" conditionals="27" coveredconditionals="18" methods="13" coveredmethods="12"/>
+          <line num="2" count="1" type="cond" truecount="3" falsecount="0"/>
+          <line num="3" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="4" count="4" type="stmt"/>
+          <line num="5" count="0" type="stmt"/>
+          <line num="6" count="8" type="cond" truecount="2" falsecount="0"/>
+          <line num="7" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="10" count="1" type="stmt"/>
+          <line num="11" count="1" type="stmt"/>
+          <line num="12" count="1" type="stmt"/>
+          <line num="13" count="1" type="stmt"/>
+          <line num="15" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="16" count="1" type="stmt"/>
+          <line num="17" count="1" type="stmt"/>
+          <line num="19" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="20" count="1" type="stmt"/>
+          <line num="22" count="1" type="stmt"/>
+          <line num="23" count="1" type="stmt"/>
+          <line num="26" count="1" type="stmt"/>
+          <line num="28" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="29" count="0" type="stmt"/>
+          <line num="30" count="0" type="stmt"/>
+          <line num="32" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="33" count="1" type="stmt"/>
+          <line num="35" count="1" type="stmt"/>
+          <line num="36" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="37" count="0" type="stmt"/>
+          <line num="39" count="1" type="stmt"/>
+          <line num="42" count="1" type="stmt"/>
+          <line num="44" count="2" type="stmt"/>
+          <line num="45" count="2" type="stmt"/>
+          <line num="46" count="4" type="stmt"/>
+          <line num="48" count="4" type="stmt"/>
+          <line num="49" count="4" type="stmt"/>
+          <line num="50" count="4" type="cond" truecount="1" falsecount="1"/>
+          <line num="51" count="0" type="stmt"/>
+          <line num="54" count="4" type="cond" truecount="1" falsecount="1"/>
+          <line num="55" count="4" type="stmt"/>
+          <line num="59" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="60" count="2" type="stmt"/>
+          <line num="61" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="dist.exceptions">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <file name="redis.exception.js" path="C:\Users\Orel Balilti\Documents\Projects\Sugoi\redis\dist\exceptions\redis.exception.js">
+          <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="dist.services">
+        <metrics statements="113" coveredstatements="103" conditionals="26" coveredconditionals="21" methods="44" coveredmethods="35"/>
+        <file name="redis.provider.js" path="C:\Users\Orel Balilti\Documents\Projects\Sugoi\redis\dist\services\redis.provider.js">
+          <metrics statements="113" coveredstatements="103" conditionals="26" coveredconditionals="21" methods="44" coveredmethods="35"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="4" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="8" count="1" type="stmt"/>
+          <line num="9" count="1" type="stmt"/>
+          <line num="10" count="1" type="stmt"/>
+          <line num="11" count="1" type="stmt"/>
+          <line num="12" count="1" type="stmt"/>
+          <line num="13" count="1" type="stmt"/>
+          <line num="16" count="4" type="stmt"/>
+          <line num="17" count="4" type="stmt"/>
+          <line num="18" count="4" type="stmt"/>
+          <line num="19" count="4" type="cond" truecount="4" falsecount="0"/>
+          <line num="20" count="1" type="stmt"/>
+          <line num="22" count="4" type="stmt"/>
+          <line num="23" count="4" type="stmt"/>
+          <line num="24" count="4" type="stmt"/>
+          <line num="27" count="0" type="stmt"/>
+          <line num="30" count="4" type="stmt"/>
+          <line num="33" count="12" type="stmt"/>
+          <line num="37" count="0" type="stmt"/>
+          <line num="41" count="19" type="stmt"/>
+          <line num="44" count="3" type="stmt"/>
+          <line num="45" count="3" type="stmt"/>
+          <line num="46" count="3" type="stmt"/>
+          <line num="48" count="9" type="stmt"/>
+          <line num="49" count="9" type="stmt"/>
+          <line num="50" count="9" type="stmt"/>
+          <line num="51" count="9" type="stmt"/>
+          <line num="52" count="9" type="stmt"/>
+          <line num="53" count="0" type="stmt"/>
+          <line num="56" count="9" type="stmt"/>
+          <line num="61" count="3" type="stmt"/>
+          <line num="64" count="52" type="stmt"/>
+          <line num="67" count="8" type="stmt"/>
+          <line num="68" count="8" type="stmt"/>
+          <line num="71" count="6" type="stmt"/>
+          <line num="72" count="6" type="stmt"/>
+          <line num="73" count="6" type="cond" truecount="2" falsecount="0"/>
+          <line num="74" count="3" type="stmt"/>
+          <line num="75" count="3" type="stmt"/>
+          <line num="76" count="8" type="stmt"/>
+          <line num="78" count="3" type="stmt"/>
+          <line num="79" count="4" type="stmt"/>
+          <line num="83" count="3" type="stmt"/>
+          <line num="84" count="3" type="stmt"/>
+          <line num="85" count="10" type="stmt"/>
+          <line num="87" count="3" type="stmt"/>
+          <line num="88" count="6" type="stmt"/>
+          <line num="91" count="6" type="stmt"/>
+          <line num="92" count="0" type="stmt"/>
+          <line num="94" count="6" type="stmt"/>
+          <line num="95" count="28" type="stmt"/>
+          <line num="100" count="6" type="stmt"/>
+          <line num="101" count="6" type="stmt"/>
+          <line num="102" count="6" type="cond" truecount="2" falsecount="0"/>
+          <line num="103" count="4" type="stmt"/>
+          <line num="104" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="105" count="0" type="stmt"/>
+          <line num="107" count="0" type="stmt"/>
+          <line num="111" count="2" type="stmt"/>
+          <line num="112" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="113" count="0" type="stmt"/>
+          <line num="115" count="0" type="stmt"/>
+          <line num="121" count="2" type="stmt"/>
+          <line num="122" count="2" type="stmt"/>
+          <line num="125" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="126" count="1" type="stmt"/>
+          <line num="128" count="2" type="stmt"/>
+          <line num="131" count="2" type="stmt"/>
+          <line num="132" count="2" type="stmt"/>
+          <line num="133" count="2" type="stmt"/>
+          <line num="138" count="4" type="stmt"/>
+          <line num="141" count="4" type="stmt"/>
+          <line num="142" count="4" type="stmt"/>
+          <line num="143" count="4" type="cond" truecount="1" falsecount="1"/>
+          <line num="144" count="4" type="stmt"/>
+          <line num="145" count="4" type="stmt"/>
+          <line num="149" count="16" type="cond" truecount="2" falsecount="0"/>
+          <line num="150" count="16" type="stmt"/>
+          <line num="151" count="16" type="stmt"/>
+          <line num="152" count="16" type="stmt"/>
+          <line num="153" count="16" type="stmt"/>
+          <line num="154" count="16" type="cond" truecount="2" falsecount="0"/>
+          <line num="155" count="14" type="stmt"/>
+          <line num="156" count="2" type="stmt"/>
+          <line num="157" count="2" type="stmt"/>
+          <line num="158" count="8" type="stmt"/>
+          <line num="159" count="4" type="stmt"/>
+          <line num="163" count="28" type="stmt"/>
+          <line num="164" count="28" type="stmt"/>
+          <line num="167" count="12" type="stmt"/>
+          <line num="170" count="8" type="stmt"/>
+          <line num="173" count="21" type="stmt"/>
+          <line num="174" count="21" type="stmt"/>
+          <line num="178" count="4" type="stmt"/>
+          <line num="179" count="4" type="stmt"/>
+          <line num="180" count="4" type="stmt"/>
+          <line num="183" count="53" type="stmt"/>
+          <line num="184" count="53" type="cond" truecount="2" falsecount="0"/>
+          <line num="185" count="49" type="stmt"/>
+          <line num="188" count="4" type="stmt"/>
+          <line num="192" count="3" type="stmt"/>
+          <line num="195" count="61" type="stmt"/>
+          <line num="198" count="1" type="stmt"/>
+          <line num="199" count="1" type="stmt"/>
+          <line num="200" count="1" type="stmt"/>
+          <line num="201" count="1" type="stmt"/>
+          <line num="202" count="1" type="stmt"/>
+          <line num="203" count="1" type="stmt"/>
+        </file>
+      </package>
+    </metrics>
+  </project>
+</coverage>
