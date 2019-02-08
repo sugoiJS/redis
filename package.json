@@ -19,6 +19,7 @@
   ],
   "keywords": [
     "redis",
+    "typescript",
     "framework",
     "promise",
     "decorator",
@@ -27,9 +28,13 @@
     "sugoijs",
     "@sugoijs"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sugoiJS/redis"
+  },
   "author": "Orel Balilti",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/orelba93/sugoi-framework#readme",
+  "homepage": "wiki.sugoijs.com",
   "dependencies": {
     "@sugoi/core": "^3.2.2",
     "redis": "^2.8.0",
@@ -40,5 +45,9 @@
     "@types/redis": "^2.8.10",
     "jest": "^23.6.0",
     "ts-jest": "^23.10.1"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "./dist/coverage"
   }
 }
