@@ -50,7 +50,7 @@ Initialization done by the static method `CreateConnection` of the `RedisProvide
         ]
     })
     export class BootstrapModule {
-        constructor(@Inject('RedisService') private _redisService: RedisProvider) {
+        constructor(@Inject('RedisService') private _redisService: TRedisProvider) {
         }
     }
 

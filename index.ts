@@ -1,6 +1,7 @@
 import "rxjs";
+export {ClientOpts} from "redis";
 
-export {RedisProvider} from "./services/redis.provider";
+export {RedisProvider, TRedisProvider} from "./services/redis.provider";
 
 export {RedisError} from "./exceptions/redis.exception";
 
