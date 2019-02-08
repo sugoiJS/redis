@@ -1,6 +1,6 @@
 # @Sugoi\redis
 
-![Sugoi logo](http://sugoijs.com/assets/images/logo_inverse.png)
+![Sugoi logo](https://sugoijs.com/assets/logo_inverse.png)
 
 
 ## Introduction
