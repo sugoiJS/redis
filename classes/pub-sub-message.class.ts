@@ -1,6 +1,6 @@
 export class PubSubMessage<DataType = any> {
     public pattern: string;
-    public error: DataType;
+    public error: any;
     public hasError: boolean;
     constructor(public data: DataType,
                 public type: MessageType,

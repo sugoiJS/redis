@@ -49,7 +49,7 @@ beforeAll(async () => {
     return await client;
 });
 afterAll(() => {
-    // client.flushall();
+    client.flushall();
     RedisProvider.QuitAll();
 });
 
