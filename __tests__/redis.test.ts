@@ -1,5 +1,4 @@
 import {RedisClient} from "redis";
-import {RedisMock} from  "redis-mock";
 import {filter} from "rxjs/internal/operators";
 import {
     OnRedisMessage,
@@ -32,14 +31,7 @@ class DecoratorVerifier {
     }
 };
 
-class Mock{
-    constructor(...args){
-        return RedisMock.createClient(...args);
-    }
-}
-
 beforeAll(async () => {
-    // RedisProvider.RedisClient = Mock;
     connection = RedisProvider.CreateConnection({
         host: "127.0.0.1",
         port: 6379,
