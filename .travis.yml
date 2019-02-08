@@ -8,7 +8,7 @@ cache:
   directories:
     - "node_modules"
 before_install:
-  - apt-get install redis-server
+  - sudo apt-get install redis-server
   - npm i -g npm@latest
 install:
   - npm ci

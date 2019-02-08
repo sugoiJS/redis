@@ -84,7 +84,7 @@ The subscription done by a single method that returns an observable object of ty
         hasError: boolean;
         data: any;
         error: any;
-        type: "data"|"close"}"error"|"init";
+        type: "data"|"close"|"error"|"init";
         channel: string;
         pattern?: string; // Only in case of pattern subscribe
     }
