@@ -28,6 +28,10 @@
     "sugoijs",
     "@sugoijs"
   ],
+  "bugs": {
+    "url": "https://github.com/sugoiJS/redis/issues",
+    "email": "oba.sugoi@gmail.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/sugoiJS/redis"
