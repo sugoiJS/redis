@@ -1,7 +1,7 @@
 {
   "name": "@sugoi/redis",
-  "version": "3.0.0",
-  "description": "TypeScript Redis client with observable and decorators",
+  "version": "3.0.4",
+  "description": "sugoi framework redis support",
   "main": "dist/index.js",
   "types": "dist/index.js",
   "scripts": {
@@ -28,6 +28,10 @@
     "sugoijs",
     "@sugoijs"
   ],
+  "bugs": {
+    "url": "https://github.com/sugoiJS/redis/issues",
+    "email": "oba.sugoi@gmail.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/sugoiJS/redis"
