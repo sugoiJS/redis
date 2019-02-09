@@ -1,0 +1,53 @@
+{
+  "name": "@sugoi/redis",
+  "version": "3.0.0",
+  "description": "TypeScript Redis client with observable and decorators",
+  "main": "dist/index.js",
+  "types": "dist/index.js",
+  "scripts": {
+    "test": "jest --config=jest.config.js --coverage --detectOpenHandles --forceExit",
+    "coverage": "jest --coverage --coverageReporters=text-lcov  --detectOpenHandles  --forceExit | curl -s https://codecov.io/bash | bash",
+    "docs": "..\\node_modules\\.bin\\typedoc --out ..\\dist\\docs\\core --json dist\\docs\\main.json --ignoreCompilerErrors --excludeNotExported --excludeProtected --excludePrivate --readme .\\README.md --mode file --hideGenerator --gitRevision '1.0.0' --externalPattern node_modules/* --excludeExternals ",
+    "build:publish": "npm run build && npm test",
+    "update:patch": "npm version patch && npm publish && npm run docs",
+    "update:minor": "npm version minor && npm publish && npm run docs",
+    "update:major": "npm version major && npm publish && npm run docs",
+    "build": "rmdir /S dist && tsc && cp -r __tests__/lua-scripts dist/__tests__/lua-scripts"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "keywords": [
+    "redis",
+    "typescript",
+    "framework",
+    "promise",
+    "decorator",
+    "@sugoi",
+    "sugoi",
+    "sugoijs",
+    "@sugoijs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sugoiJS/redis"
+  },
+  "author": "Orel Balilti",
+  "license": "MIT",
+  "homepage": "wiki.sugoijs.com",
+  "dependencies": {
+    "@sugoi/core": "^3.2.2",
+    "redis": "^2.8.0",
+    "rxjs": "^6.4.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.14",
+    "@types/redis": "^2.8.10",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.1"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "./dist/coverage"
+  }
+}
