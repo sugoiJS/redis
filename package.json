@@ -1,6 +1,6 @@
 {
   "name": "@sugoi/redis",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "sugoi framework redis support",
   "main": "dist/index.js",
   "types": "dist/index.js",
