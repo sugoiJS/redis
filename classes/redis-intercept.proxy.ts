@@ -1,4 +1,3 @@
-import {promisify} from "util";
 
 export class RedisInterceptProxy {
 
@@ -25,26 +24,4 @@ export class RedisInterceptProxy {
 
 }
 
-// export class RedisClientProxy {
-//     static Factory() {
-//         return new this();
-//     }
-//
-//
-//     construct(className,args,proxy) {
-//         const instance = Reflect.construct(className,args,proxy);
-//         instance.runAsyncMethod = this.runAsyncMethod;
-//         return new Proxy(instance,this)
-//     }
-//
-//     apply(target, thisArg, argumentsList: any[]) {
-//         return thisArg.runAsyncMethod(thisArg, target, ...argumentsList);
-//     }
-//
-//     runAsyncMethod<Response = any>(thisArg,method: (...args) => any, ...args): Promise<Response> {
-//         return promisify(method).apply(thisArg, args);
-//     }
-//
-//
-// }
 

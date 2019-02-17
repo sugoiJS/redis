@@ -14,7 +14,7 @@ import {ScriptResource} from "../classes/script-resource.class";
 import {CHANNEL_DECORATOR_KEY, PATTERN_DECORATOR_KEY} from "../decorators/on-message.decorator";
 import {IRedisClientPromise} from "../interfaces/redis-client-promise.interface";
 
-export type TRedisProvider = RedisProvider & _RedisClient & IRedisClientPromise;
+export type TRedisProvider = IRedisClientPromise & RedisProvider & _RedisClient;
 export type TRedisClient = _RedisClient;
 
 export class RedisProvider implements IRedisProvider {
@@ -68,12 +68,15 @@ export class RedisProvider implements IRedisProvider {
         const types = [RedisConnectionTypes.PUB, RedisConnectionTypes.QUERY, RedisConnectionTypes.SUB];
         const quitPromises = [];
         for (const type of types) {
-            let client,connection;
+            let client, connection;
             try {
                 connection = RedisProvider.GetConnection(this._connectionName, type);
                 client = connection.getRedisClient();
-                const p = new Promise(resolve => {
-                    client.quit((err,res) => {
+                const p = new Promise((resolve, reject) => {
+                    client.quit((err, res) => {
+                        if(err){
+                            return reject(err);
+                        }
                         resolve(res);
                     });
                 });
@@ -99,7 +102,7 @@ export class RedisProvider implements IRedisProvider {
     public getSubscriber<DataType>(byPattern: boolean, channelOrPattern: string): Observable<PubSubMessage<DataType>> {
 
         const client = this.getSubscriberClient();
-        return Observable.create(obs => {
+        const obs = Observable.create(obs => {
             if (byPattern) {
                 client.psubscribe(channelOrPattern);
                 client.on("pmessage", (pattern, channel, data) => {
@@ -125,36 +128,38 @@ export class RedisProvider implements IRedisProvider {
             client.on("punsubscribe", (channel, data) => this.onChannelClose(obs, channel, data));
         })
             .pipe(
-                share(),
-                publish(),
-                refCount()
+                share()
             );
+        return obs;
     }
 
-    public unsubscribe(byPattern: false, ...channels: string[]): Promise<string>;
+    public unsubscribe(byPattern: false, ...channels: string[]): Promise<string[]>;
 
-    public unsubscribe(byPattern: true, ...patterns: string[]): Promise<string>;
-    public unsubscribe(byPattern: boolean, ...channelsOrPatterns: string[]): Promise<string> {
-
-        const client = this.getSubscriberClient();
-        return new Promise((resolve, reject) => {
-            if (byPattern) {
-                client.punsubscribe(...channelsOrPatterns, (err, name) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    resolve(name)
-                });
-            } else {
-                client.unsubscribe(...channelsOrPatterns, (err, name) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    resolve(name)
-                });
-            }
-        })
-
+    public unsubscribe(byPattern: true, ...patterns: string[]): Promise<string[]>;
+    public unsubscribe(byPattern: boolean, ...channelsOrPatterns: string[]): Promise<string[]> {
+        const promises = [];
+        for (let channel of channelsOrPatterns) {
+            const client = this.getSubscriberClient().getRedisClient();
+            const promise = new Promise((resolve, reject) => {
+                if (byPattern) {
+                    client.punsubscribe(channel,(err,data)=>{
+                        if(err){
+                            return reject(err)
+                        }
+                        resolve(data)
+                    })
+                } else {
+                    client.unsubscribe(channel,(err,data)=>{
+                        if(err){
+                            return reject(err)
+                        }
+                        resolve(data)
+                    })
+                }
+            })
+            promises.push(promise);
+        }
+        return Promise.all(promises)
     }
 
     public runScripts(...scripts: Array<ScriptResource>): Promise<any> {

@@ -1,5 +1,5 @@
 import {RedisClient} from "redis";
-import {filter} from "rxjs/internal/operators";
+import {filter, finalize, take} from "rxjs/internal/operators";
 import {
     OnRedisMessage,
     OnRedisPMessage,
@@ -23,7 +23,7 @@ class DecoratorVerifier {
         this.decoratorTestChannel = data
     }
 
-    @OnRedisPMessage('decoratorTestPattern-*', null, (msg) => {
+    @OnRedisPMessage('decoratorTestPattern-*', (msg) => {
         msg.data += "MW";
     })
     public static patternListener(msg) {
@@ -73,7 +73,7 @@ describe("Redis pub/sub", () => {
 
 describe("Redis pub/sub decorators", () => {
     it("pub/sub by channel", async () => {
-        expect.assertions(5);
+
         return await new Promise(async resolve => {
             await pubSubVerifier(false, 'decoratorTest');
             setTimeout(() => {
@@ -87,7 +87,6 @@ describe("Redis pub/sub decorators", () => {
 
     it("pub/sub by pattern", async () => {
         return await new Promise(async resolve => {
-            expect.assertions(5);
             await pubSubVerifier(true, 'decoratorTestPattern-*');
             setTimeout(() => {
                 expect(DecoratorVerifier.decoratorTestPattern).toBeDefined();
@@ -131,7 +130,8 @@ async function pubSubVerifier(byPattern: boolean, channelName: string) {
 
         subscriber.pipe(
             filter((msg: PubSubMessage) => msg.type === MessageType.data)
-        ).subscribe(mockVerifier);
+        )
+            .subscribe(mockVerifier);
 
         subscriber.pipe(
             filter((msg: PubSubMessage) => msg.type === MessageType.init)
@@ -145,12 +145,13 @@ async function pubSubVerifier(byPattern: boolean, channelName: string) {
                         await RedisProvider.GetConnection().publish(publishChannel, "testing_" + counter++);
                         await RedisProvider.GetConnection().unsubscribe(byPattern, channelName);
                     }, 0);
-                },
-                _ => {
-                },
-                _ => {
-                    expect(mockVerifier).toBeCalledTimes(2);
-                    resolve()
                 })
+        subscriber.subscribe(
+            null,
+            null,
+            _=>{
+                expect(mockVerifier).toBeCalledTimes(2);
+                resolve()
+            })
     })
 }

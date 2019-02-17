@@ -9,9 +9,9 @@ export interface IRedisProvider {
 
     getSubscriber<DataType>(byPattern: true, pattern: string): Observable<DataType>
 
-    unsubscribe(byPattern: false, channel?: string): Promise<string>;
+    unsubscribe(byPattern: false, channel?: string): Promise<string[]>;
 
-    unsubscribe(byPattern: true, pattern?: string): Promise<string>;
+    unsubscribe(byPattern: true, pattern?: string): Promise<string[]>;
 
     runScripts(...scripts: Array<string|{fileName?:string, script?:string, args?:string[]}>): Promise<any>;
 }

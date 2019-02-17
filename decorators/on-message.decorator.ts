@@ -49,9 +49,6 @@ export function OnRedisPMessage(pattern: string,
     return function (target,
                      property,
                      descriptor: TypedPropertyDescriptor<(msg: PubSubMessage<ResponseType>) => any>) {
-        if (!connectionName) {
-            connectionName = "__SUG__DEFAULT"
-        }
         registerMeta(PATTERN_DECORATOR_KEY + connectionName, pattern, descriptor.value, target, ...middlewares)
     }
 }
