@@ -2,12 +2,12 @@ import {IRedisConfig} from "../interfaces/redis-config.interface";
 import {RedisClient as _RedisClient} from "redis";
 import {RedisError} from "../exceptions/redis.exception";
 import {EXCEPTIONS} from "../constants/exceptions.constant";
-import {Observable, Subject} from "rxjs/index";
+import {Observable, of, Subject, concat} from "rxjs/index";
 import {IRedisProvider} from "../interfaces/redis-provider.interface";
 import {promisify} from "util";
 import {RedisConnectionTypes} from "../constants/redis-connection-types.constants";
 import {MessageType, PubSubMessage} from "../classes/pub-sub-message.class";
-import {filter, publish, refCount, share} from "rxjs/internal/operators";
+import {filter, share} from "rxjs/internal/operators";
 import {RedisInterceptProxy} from "../classes/redis-intercept.proxy";
 import {ScriptLoader} from "../classes/script-loader.class";
 import {ScriptResource} from "../classes/script-resource.class";
@@ -74,7 +74,7 @@ export class RedisProvider implements IRedisProvider {
                 client = connection.getRedisClient();
                 const p = new Promise((resolve, reject) => {
                     client.quit((err, res) => {
-                        if(err){
+                        if (err) {
                             return reject(err);
                         }
                         resolve(res);
@@ -97,39 +97,60 @@ export class RedisProvider implements IRedisProvider {
         return this.runAsyncMethod<number>(client.publish, channel, value);
     }
 
-    public getSubscriber<DataType>(byPattern: false, channel: string): Observable<PubSubMessage<DataType>>
-    public getSubscriber<DataType>(byPattern: true, pattern: string): Observable<PubSubMessage<DataType>>
-    public getSubscriber<DataType>(byPattern: boolean, channelOrPattern: string): Observable<PubSubMessage<DataType>> {
-
+    public getSubscriber(byPattern: false, channel: string): Observable<PubSubMessage<string>>
+    public getSubscriber(byPattern: true, pattern: string): Observable<PubSubMessage<string>>
+    public getSubscriber(byPattern: boolean, channelOrPattern: string): Observable<PubSubMessage<string>> {
+        let obs;
         const client = this.getSubscriberClient();
-        const obs = Observable.create(obs => {
-            if (byPattern) {
-                client.psubscribe(channelOrPattern);
-                client.on("pmessage", (pattern, channel, data) => {
-                    obs.next(new PubSubMessage(data, MessageType.data, channel).setPattern(pattern));
-                });
-                client.on("psubscribe", (channel, data) => {
-                    obs.next(new PubSubMessage(data, MessageType.init, channel));
-                });
-            } else {
-                client.subscribe(channelOrPattern);
-                client.on("message", (channel, data) => {
-                    obs.next(new PubSubMessage(data, MessageType.data, channel));
-                });
-                client.on("subscribe", (channel, data) => {
-                    obs.next(new PubSubMessage(data, MessageType.init, channel));
-                });
-            }
-
-            client.on("error", (channel, data) => {
-                obs.err(new PubSubMessage(data, MessageType.error, channel));
+        const subject = new Subject<PubSubMessage>();
+        client.on("error", (channel: string, data: any) => {
+            subject.error(new PubSubMessage(data, MessageType.error, channel));
+        });
+        if (byPattern) {
+            client.on("pmessage", (pattern: string, channel: string, data: any) => {
+                if (pattern !== channelOrPattern) {
+                    return;
+                }
+                subject.next(new PubSubMessage(data, MessageType.data, channel).setPattern(pattern));
             });
-            client.on("unsubscribe", (channel, data) => this.onChannelClose(obs, channel, data));
-            client.on("punsubscribe", (channel, data) => this.onChannelClose(obs, channel, data));
-        })
-            .pipe(
-                share()
-            );
+            client.on("psubscribe", (pattern: string, data: any) => {
+                if (pattern !== channelOrPattern) {
+                    return;
+                }
+                const msg = new PubSubMessage(data, MessageType.init, pattern).setPattern(pattern);
+                subject.next(msg);
+            });
+            client.psubscribe(channelOrPattern);
+        } else {
+            client.on("message", (channel: string, data: any) => {
+                if (channel !== channelOrPattern) {
+                    return;
+                }
+                subject.next(new PubSubMessage(data, MessageType.data, channel));
+            });
+            client.on("subscribe", (channel: string, data: any) => {
+                if (channel !== channelOrPattern) {
+                    return;
+                }
+                const msg = new PubSubMessage(data, MessageType.init, channel);
+                subject.next(msg);
+            });
+            client.subscribe(channelOrPattern);
+        }
+
+        client.on("unsubscribe", (channel, data) => {
+            if (channel !== channelOrPattern) {
+                return;
+            }
+            this.onChannelClose(subject, channel, data)
+        });
+        client.on("punsubscribe", (channel, data) => {
+            if (channel !== channelOrPattern) {
+                return;
+            }
+            this.onChannelClose(subject, channel, data)
+        });
+        obs = subject.asObservable().pipe(share());
         return obs;
     }
 
@@ -142,15 +163,15 @@ export class RedisProvider implements IRedisProvider {
             const client = this.getSubscriberClient().getRedisClient();
             const promise = new Promise((resolve, reject) => {
                 if (byPattern) {
-                    client.punsubscribe(channel,(err,data)=>{
-                        if(err){
+                    client.punsubscribe(channel, (err, data) => {
+                        if (err) {
                             return reject(err)
                         }
                         resolve(data)
                     })
                 } else {
-                    client.unsubscribe(channel,(err,data)=>{
-                        if(err){
+                    client.unsubscribe(channel, (err, data) => {
+                        if (err) {
                             return reject(err)
                         }
                         resolve(data)

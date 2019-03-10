@@ -1,5 +1,5 @@
 import {RedisClient} from "redis";
-import {filter, finalize, take} from "rxjs/internal/operators";
+import {filter} from "rxjs/internal/operators";
 import {
     OnRedisMessage,
     OnRedisPMessage,
@@ -11,22 +11,40 @@ import {
 
 let client: RedisClient;
 let connection: RedisProvider;
+const counters = {
+};
 
 class DecoratorVerifier {
     static decoratorTestChannel;
     static decoratorTestPattern;
 
+    @OnRedisMessage('dummy')
+    public static shouldNotListen(data) {
+        this.decoratorTestChannel = true;
+    }
+
     @OnRedisMessage('decoratorTest', (msg) => {
         msg.data += "MW";
     })
-    public static listener(data) {
+    public static decoratorListener(data) {
+        if (this.decoratorTestChannel === true) {
+            return
+        }
         this.decoratorTestChannel = data
+    }
+
+    @OnRedisMessage('dummy-*')
+    public static patternShouldNotListen(data) {
+        this.decoratorTestPattern = true;
     }
 
     @OnRedisPMessage('decoratorTestPattern-*', (msg) => {
         msg.data += "MW";
     })
     public static patternListener(msg) {
+        if (this.decoratorTestChannel === true) {
+            return;
+        }
         this.decoratorTestPattern = msg;
     }
 };
@@ -38,10 +56,10 @@ beforeAll(async () => {
         isDefault: true
     });
     client = connection.getRedisClient();
+    await client.flushall();
     return await client;
 });
 afterAll(() => {
-    client.flushall();
     RedisProvider.QuitAll();
 });
 
@@ -90,9 +108,9 @@ describe("Redis pub/sub decorators", () => {
             await pubSubVerifier(true, 'decoratorTestPattern-*');
             setTimeout(() => {
                 expect(DecoratorVerifier.decoratorTestPattern).toBeDefined();
-                expect(DecoratorVerifier.decoratorTestChannel.data.indexOf("MW")).toBeGreaterThanOrEqual(0);
+                expect(DecoratorVerifier.decoratorTestPattern.data.indexOf("MW")).toBeGreaterThanOrEqual(0);
                 resolve();
-            }, 0)
+            },0)
         })
     });
 });
@@ -119,9 +137,9 @@ describe("Redis Scripts", () => {
 });
 
 async function pubSubVerifier(byPattern: boolean, channelName: string) {
-    let counter = 1;
+    counters[channelName] = 0;
     const mockVerifier = jest.fn((_data: PubSubMessage) => {
-        expect(_data.data).toEqual("testing_" + (counter - 1));
+        expect(_data.data).toEqual("testing_" + (counters[channelName] - 1));
     });
 
     return await new Promise(resolve => {
@@ -131,25 +149,24 @@ async function pubSubVerifier(byPattern: boolean, channelName: string) {
         subscriber.pipe(
             filter((msg: PubSubMessage) => msg.type === MessageType.data)
         )
-            .subscribe(mockVerifier);
+            .subscribe((data) => mockVerifier(data));
 
         subscriber.pipe(
-            filter((msg: PubSubMessage) => msg.type === MessageType.init)
-        )
-            .subscribe(async (res) => {
-                    const publishChannel = byPattern
-                        ? channelName.split('*').join('1')
-                        : channelName;
-                    await RedisProvider.GetConnection().publish(publishChannel, "testing_" + counter++);
-                    setTimeout(async () => {
-                        await RedisProvider.GetConnection().publish(publishChannel, "testing_" + counter++);
-                        await RedisProvider.GetConnection().unsubscribe(byPattern, channelName);
-                    }, 0);
-                })
+            filter((msg: PubSubMessage) => MessageType.init === msg.type)
+        ).subscribe(async (res) => {
+                const publishChannel = byPattern
+                    ? channelName.split('*').join('1')
+                    : channelName;
+                await RedisProvider.GetConnection().publish(publishChannel, "testing_" + counters[channelName]++);
+                setTimeout(async () => {
+                    await RedisProvider.GetConnection().publish(publishChannel, "testing_" + counters[channelName]++);
+                    await RedisProvider.GetConnection().unsubscribe(byPattern, channelName);
+                }, 0);
+            });
         subscriber.subscribe(
             null,
             null,
-            _=>{
+            _ => {
                 expect(mockVerifier).toBeCalledTimes(2);
                 resolve()
             })
