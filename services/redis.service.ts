@@ -13,7 +13,7 @@ export class RedisService {
     }
 
     public static builder(identifier:string,
-                          db: number = RedisService.config.db,
+                          db: number | string = RedisService.config.db,
                           hostName: string = RedisService.config.host):RedisClient {
         let client;
         if (!(client = RedisService.getInstance(identifier))) {
@@ -33,7 +33,7 @@ export class RedisService {
      * @param hostname
      * @return redis.RedisClient
      */
-    private static setRedis(identifier:string,db: number = RedisService.config.db, hostname: string = RedisService.config.host): RedisClient {
+    private static setRedis(identifier:string,db: number | string = RedisService.config.db, hostname: string = RedisService.config.host): RedisClient {
         let config = Object.assign({}, RedisService.config);
         config.db = db;
         config.host = hostname;

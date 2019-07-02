@@ -12,7 +12,7 @@
     "update:patch": "npm version patch && npm publish && npm run docs",
     "update:minor": "npm version minor && npm publish && npm run docs",
     "update:major": "npm version major && npm publish && npm run docs",
-    "build": "rmdir /S dist && tsc && cp -r __tests__/lua-scripts dist/__tests__/lua-scripts"
+    "build": "rimraf dist && tsc && cp -r __tests__/lua-scripts dist/__tests__/lua-scripts"
   },
   "files": [
     "dist/**/*"
@@ -48,6 +48,7 @@
     "@types/jest": "^24.0.15",
     "@types/redis": "^2.8.10",
     "jest": "^23.6.0",
+    "rimraf": "^2.6.3",
     "ts-jest": "^23.10.1",
     "typescript": "^3.5.2"
   },
