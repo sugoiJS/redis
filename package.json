@@ -40,15 +40,16 @@
   "license": "MIT",
   "homepage": "wiki.sugoijs.com",
   "dependencies": {
-    "@sugoi/core": "^3.2.2",
     "redis": "^2.8.0",
-    "rxjs": "^6.4.0"
+    "rxjs": "^6.5.2",
+    "@sugoi/core": "^4.0.2"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.14",
+    "@types/jest": "^24.0.15",
     "@types/redis": "^2.8.10",
     "jest": "^23.6.0",
-    "ts-jest": "^23.10.1"
+    "ts-jest": "^23.10.1",
+    "typescript": "^3.5.2"
   },
   "jest": {
     "collectCoverage": true,
