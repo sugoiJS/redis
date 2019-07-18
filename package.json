@@ -6,7 +6,7 @@
   "types": "dist/index.js",
   "scripts": {
     "test": "jest --config=jest.config.js --coverage --detectOpenHandles --forceExit --runInBand",
-    "coverage": "jest --coverage --coverageReporters=text-lcov  --detectOpenHandles  --forceExit | curl -s https://codecov.io/bash | bash",
+    "coverage": "jest  --config=jest.config.js --coverage --coverageReporters=text-lcov  --detectOpenHandles  --forceExit | curl -s https://codecov.io/bash | bash",
     "docs": "..\\node_modules\\.bin\\typedoc --out ..\\dist\\docs\\core --json dist\\docs\\main.json --ignoreCompilerErrors --excludeNotExported --excludeProtected --excludePrivate --readme .\\README.md --mode file --hideGenerator --gitRevision '1.0.0' --externalPattern node_modules/* --excludeExternals ",
     "build:publish": "npm run build && npm test",
     "update:patch": "npm version patch && npm publish && npm run docs",
@@ -47,7 +47,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.15",
     "@types/redis": "^2.8.10",
-    "jest": "^23.6.0",
+    "jest": "^24.8.0",
     "rimraf": "^2.6.3",
     "ts-jest": "^23.10.1",
     "typescript": "^3.5.2"
